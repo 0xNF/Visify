@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visify", "Visify\Visify.csproj", "{C7DEF6B1-18C5-4320-AAB3-14E2A13B187A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7DEF6B1-18C5-4320-AAB3-14E2A13B187A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DEF6B1-18C5-4320-AAB3-14E2A13B187A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DEF6B1-18C5-4320-AAB3-14E2A13B187A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DEF6B1-18C5-4320-AAB3-14E2A13B187A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {893AE3FA-98A1-402E-84B4-20758CDD968A}
+	EndGlobalSection
+EndGlobal
