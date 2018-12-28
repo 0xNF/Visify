@@ -9,12 +9,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Visify.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Visify.Services;
+using Visify.Models;
 
 namespace Visify
 {
+
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -34,17 +38,29 @@ namespace Visify
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAuthentication().AddSpotify((options => {
+                options.ClientId = AppConstants.ClientId;
+                options.ClientSecret = AppConstants.ClientSecret;
+                options.SaveTokens = true;
+                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_MODIFY_PUBLIC.Name);
+                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_COLLABORATIVE.Name);
+                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_PRIVATE.Name);
+                options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.USER_LIBRARY_READ.Name);
+            })
+            ).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+            /* For identity init stuff see Areas/Identity/IdentityHostingStartup.cs */
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            EnvironmentVariableService.PopulateEnvironmentVariables();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service, RoleManager<IdentityRole> roleManager, UserManager<Areas.Identity.Data.VisifyUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -69,6 +85,14 @@ namespace Visify
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+
+            EnvironmentVariableService.PopulateEnvironmentVariables();
+            DatabaseSeedService s = new DatabaseSeedService(roleManager, userManager);
+            s.Seed().Wait();
+
+
         }
     }
 }

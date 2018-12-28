@@ -1,10 +1,10 @@
-﻿{
+{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:40568",
-      "sslPort": 44320
+      "applicationUrl": "http://localhost:5000",
+      "sslPort": 44341
     }
   },
   "profiles": {
@@ -12,16 +12,23 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "VISIFY_ADMIN_PASSWORD": "lmao",
+        "VISIFY_ADMIN_USERNAME": "ayyy",
+        "VISIFY_ADMIN_EMAIL": "admin@winetech.com",
+        "VISIFY_SPOTIFY_CLIENT_SECRET": "c59e123ec4554ec39e7fe99a803c2703",
+        "VISIFY_LOG_DIRECTORY": "./",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VISIFY_CONNECTION_STRING": "data source=visify.db",
+        "VISIFY_SPOTIFY_CLIENT_ID": "bd7e15ffc916406b9c93960e7e5a992a"
       }
     },
     "Visify": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000;https://localhost:5001"
     }
   }
 }

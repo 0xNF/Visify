@@ -1,7 +1,6 @@
 using System;
 
-namespace Visify.Models
-{
+namespace Visify.Models {
     public class ErrorViewModel
     {
         public string RequestId { get; set; }
