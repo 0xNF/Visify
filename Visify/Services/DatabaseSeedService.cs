@@ -19,32 +19,20 @@ namespace Visify.Services {
 
         public async Task Seed() {
             await EnsureRolesExist();
+            await EnsureAdministratorExists();
         }
 
-        private async Task EnsureRolesExist() {
-            logger.Info("Checking that necessary roles exist");
-            
-            //RoleManager<IdentityRole> RoleManager = _serviceProvider.GetService<RoleManager<IdentityRole>>();
-            //UserManager<Areas.Identity.Data.VisifyUser> UserManager = _serviceProvider.GetService<UserManager<Areas.Identity.Data.VisifyUser>>();
-            string[] Roles = { "Member", "Admin" };
+        private async Task EnsureAdministratorExists() {
+            logger.Info("Checking that the Adminitrator role exists");
+
             IdentityResult result;
-            foreach (string s in Roles) {
-                logger.Info($"Checking that role {s} exist");
-                bool roleExists = await _roleManager.RoleExistsAsync(s);
-                if (!roleExists) {
-                    logger.Info($"Role {s} did not exist. Creating it in persistence store");
-                    result = await _roleManager.CreateAsync(new IdentityRole(s));
-                }
-            }
 
             if (String.IsNullOrWhiteSpace(AppConstants.AdminUserEmail) || String.IsNullOrWhiteSpace(AppConstants.AdminUserPassword) || String.IsNullOrWhiteSpace(AppConstants.AdminUserUserName)) {
                 logger.Error("Failed to create admin user. Some required Admin environment variables were null or empty. Please ensure that AdminUserEmail, AdminUserName, and AdminUserPassword have values");
                 return;
             }
-
             logger.Info("Checking Administrator user exists");
-            Visify.Areas.Identity.Data.VisifyUser Admin = await _userManager.FindByEmailAsync(AppConstants.AdminUserEmail);
-
+            Areas.Identity.Data.VisifyUser Admin = await _userManager.FindByEmailAsync(AppConstants.AdminUserEmail);
             if (Admin == null) {
                 logger.Info("Administrator user did not exist. Creating in persistence store");
                 Admin = new Visify.Areas.Identity.Data.VisifyUser() {
@@ -73,6 +61,20 @@ namespace Visify.Services {
                 logger.Info("Admin's phone was created unconfirmed. Confirming.");
                 string confirmationToken = await _userManager.GenerateChangePhoneNumberTokenAsync(Admin, "0000000000");
                 await _userManager.ChangePhoneNumberAsync(Admin, "0000000000", confirmationToken);
+            }
+        }
+
+        private async Task EnsureRolesExist() {
+            logger.Info("Checking that necessary roles exist");
+            string[] Roles = { "Member", "Admin" };
+            IdentityResult result;
+            foreach (string s in Roles) {
+                logger.Info($"Checking that role {s} exist");
+                bool roleExists = await _roleManager.RoleExistsAsync(s);
+                if (!roleExists) {
+                    logger.Info($"Role {s} did not exist. Creating it in persistence store");
+                    result = await _roleManager.CreateAsync(new IdentityRole(s));
+                }
             }
         }
     }
