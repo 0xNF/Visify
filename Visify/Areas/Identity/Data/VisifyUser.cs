@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Visify.Models;
 
 namespace Visify.Areas.Identity.Data
 {
     // Add profile data for application users by adding properties to the VisifyUser class
     public class VisifyUser : IdentityUser {
+
+        public List<VisifySavedTrack> UserLibrary { get; set; } = new List<VisifySavedTrack>();
+        public RateLimit RateLimit { get; set; }
     }
 }

@@ -2,7 +2,11 @@
 using NLog;
 using System;
 using System.Threading.Tasks;
+using Visify.Areas.Identity.Data;
 using Visify.Models;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Visify.Services {
     public class DatabaseSeedService {
@@ -10,9 +14,9 @@ namespace Visify.Services {
         private Logger logger = LogManager.GetCurrentClassLogger();
 
         private RoleManager<IdentityRole> _roleManager;
-        private UserManager<Areas.Identity.Data.VisifyUser> _userManager;
+        private UserManager<VisifyUser> _userManager;
 
-        public DatabaseSeedService(RoleManager<IdentityRole> role, UserManager<Areas.Identity.Data.VisifyUser> manager) {
+        public DatabaseSeedService(RoleManager<IdentityRole> role, UserManager<VisifyUser> manager) {
             this._roleManager = role;
             this._userManager = manager;
         }
@@ -76,6 +80,42 @@ namespace Visify.Services {
                     result = await _roleManager.CreateAsync(new IdentityRole(s));
                 }
             }
+        }
+    }
+
+    public class SpotifyDownloadService {
+
+        private UserManager<VisifyUser> _UserManager;
+        private SignInManager<VisifyUser> _SigninManager;
+        private VisifyContext _context;
+        
+        public SpotifyDownloadService(UserManager<VisifyUser> userManager, VisifyContext context, SignInManager<VisifyUser> signinManager) {
+            this._UserManager = userManager;
+            this._context = context;
+            this._SigninManager = signinManager;
+        }
+
+        private async Task DownloadForUser(string uid) {
+
+            /*
+             * 1. Get User from Database, including rate limits and tracks
+             * 2. If rate limited, return early. Take note.
+             * 3. Get tokens via claims principal
+             * 4. If expired, renew
+             * 5. If renew failure, return early. Take note.
+             * 6. Save renewed tokens if applicable
+             * 7. Ask Spotify 
+             */
+
+            VisifyUser user = await _context.Users.Include(x => x.RateLimit).Include(x => x.UserLibrary).Where(x => x.Id == uid).SingleOrDefaultAsync();
+            if(user == null) {
+                // TODO we failed, what do
+                return; 
+            }
+
+            //ClaimsPrincipal claimsPrincipal = await _SigninManager.CreateUserPrincipalAsync(user);
+            //var externalAccessToken = await _userManager.GetAuthenticationTokenAsync(claimsPrincipal, "Microsoft", "access_token");
+            //this._UserManager.Users.Where(x => x.Id == uid).
         }
     }
 }

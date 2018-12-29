@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Visify.Areas.Identity.Data;
 
 namespace Visify.Models {
@@ -52,5 +54,53 @@ namespace Visify.Models {
         /// </summary>
         public DateTimeOffset ExpiresAt { get; set; }
 
+    }
+
+    public class VisifyArtist {
+
+        [Key]
+        public string SpotifyId { get; set; }
+
+        [Required]
+        public string ArtistName { get; set; }
+    }
+
+    public class VisifyTrack {
+        
+        [Key]
+        public string SpotifyId { get; set; }
+
+        [Required]
+        public string TrackName { get; set; }
+
+        [Required]
+        public string AlbumName { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(VisifyArtist.SpotifyId))]
+        public VisifyArtist Artist { get; set; }
+
+    }
+
+    public class VisifySavedTrack {
+
+        public VisifyTrack Track { get; set; }
+        public string TrackId { get; set; }
+
+        public VisifyUser User { get; set; }
+        public string UserId { get; set; }
+
+        [Required]
+        public DateTime SavedAt { get; set; }
+    }
+
+    public class RateLimit {
+
+        public VisifyUser User { get; set; }
+        public string UserId { get; set; }
+
+        [Required]
+        public DateTime RateLimitExpiresAt { get; set; }
+        
     }
 }

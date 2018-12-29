@@ -12,14 +12,21 @@ namespace Visify.Services {
     public static class DatabaseService {
 
         //public static async Task<Option<bool, string>> ScaffoldTables() {
-        //    using(SqliteConnection conn = new SqliteConnection(AppConstants.ConnectionString)) {
-        //        await conn.OpenAsync();
-        //        using(SqliteTransaction t = conn.BeginTransaction()) {
-        //            using(SqliteCommand comm = conn.CreateCommand()) {
-        //                try {
-        //                    comm.CommandText = "CREATE TABLE \"\";";
 
-        //                } catch {
+        //    using (SqliteConnection conn = new SqliteConnection(AppConstants.ConnectionString)) {
+        //        await conn.OpenAsync();
+        //        using (SqliteTransaction t = conn.BeginTransaction()) {
+        //            using (SqliteCommand comm = conn.CreateCommand()) {
+        //                try {
+        //                    comm.CommandText = "CREATE TABLE `RateLimits` (`AspNetUserId` TEXT NOT NULL, `RateLimitedAt` INTEGER NOT NULL, `Offset` INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(`AspNetUserId`) " +
+        //                        "REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE " +
+        //                        "PRIMARY KEY(`AspNetUserId`,`RateLimitedAt`)" +
+        //                        "); ";
+
+        //                    await comm.ExecuteNonQueryAsync();
+
+        //                }
+        //                catch {
         //                    return Option.None<bool>().WithException("Failed to scaffold tables");
         //                }
         //            }
