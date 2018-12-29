@@ -89,9 +89,9 @@ namespace Visify
 
 
             EnvironmentVariableService.PopulateEnvironmentVariables();
+            DatabaseService.ScaffoldTables().Wait();
             DatabaseSeedService s = new DatabaseSeedService(roleManager, userManager);
             s.Seed().Wait();
-
 
         }
     }

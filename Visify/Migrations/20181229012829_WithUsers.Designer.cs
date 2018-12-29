@@ -9,8 +9,8 @@ using Visify.Models;
 namespace Visify.Migrations
 {
     [DbContext(typeof(VisifyContext))]
-    [Migration("20181229003418_WithRateLimits")]
-    partial class WithRateLimits
+    [Migration("20181229012829_WithUsers")]
+    partial class WithUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,68 +179,6 @@ namespace Visify.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Visify.Models.RateLimit", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<DateTime>("RateLimitExpiresAt");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("RateLimit");
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifyArtist", b =>
-                {
-                    b.Property<string>("SpotifyId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ArtistName")
-                        .IsRequired();
-
-                    b.Property<string>("VisifyTrackSpotifyId");
-
-                    b.HasKey("SpotifyId");
-
-                    b.HasIndex("VisifyTrackSpotifyId");
-
-                    b.ToTable("VisifyArtist");
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifySavedTrack", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("TrackId");
-
-                    b.Property<DateTime>("SavedAt");
-
-                    b.Property<string>("VisifyTrackSpotifyId");
-
-                    b.HasKey("UserId", "TrackId");
-
-                    b.HasIndex("TrackId");
-
-                    b.HasIndex("VisifyTrackSpotifyId");
-
-                    b.ToTable("VisifySavedTrack");
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifyTrack", b =>
-                {
-                    b.Property<string>("SpotifyId");
-
-                    b.Property<string>("AlbumName")
-                        .IsRequired();
-
-                    b.Property<string>("TrackName")
-                        .IsRequired();
-
-                    b.HasKey("SpotifyId");
-
-                    b.ToTable("VisifyTrack");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -283,47 +221,6 @@ namespace Visify.Migrations
                     b.HasOne("Visify.Areas.Identity.Data.VisifyUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Visify.Models.RateLimit", b =>
-                {
-                    b.HasOne("Visify.Areas.Identity.Data.VisifyUser", "User")
-                        .WithOne("RateLimit")
-                        .HasForeignKey("Visify.Models.RateLimit", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifyArtist", b =>
-                {
-                    b.HasOne("Visify.Models.VisifyTrack")
-                        .WithMany()
-                        .HasForeignKey("VisifyTrackSpotifyId");
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifySavedTrack", b =>
-                {
-                    b.HasOne("Visify.Models.VisifyTrack", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Visify.Areas.Identity.Data.VisifyUser", "User")
-                        .WithMany("UserLibrary")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Visify.Models.VisifyTrack")
-                        .WithMany()
-                        .HasForeignKey("VisifyTrackSpotifyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Visify.Models.VisifyTrack", b =>
-                {
-                    b.HasOne("Visify.Models.VisifyArtist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("SpotifyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

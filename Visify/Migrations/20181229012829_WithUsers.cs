@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Visify.Migrations
 {
-    public partial class WithRateLimits : Migration
+    public partial class WithUsers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -152,76 +152,6 @@ namespace Visify.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RateLimit",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RateLimitExpiresAt = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RateLimit", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_RateLimit_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VisifySavedTrack",
-                columns: table => new
-                {
-                    TrackId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false),
-                    SavedAt = table.Column<DateTime>(nullable: false),
-                    VisifyTrackSpotifyId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VisifySavedTrack", x => new { x.UserId, x.TrackId });
-                    table.ForeignKey(
-                        name: "FK_VisifySavedTrack_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VisifyTrack",
-                columns: table => new
-                {
-                    SpotifyId = table.Column<string>(nullable: false),
-                    TrackName = table.Column<string>(nullable: false),
-                    AlbumName = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VisifyTrack", x => x.SpotifyId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VisifyArtist",
-                columns: table => new
-                {
-                    SpotifyId = table.Column<string>(nullable: false),
-                    ArtistName = table.Column<string>(nullable: false),
-                    VisifyTrackSpotifyId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VisifyArtist", x => x.SpotifyId);
-                    table.ForeignKey(
-                        name: "FK_VisifyArtist_VisifyTrack_VisifyTrackSpotifyId",
-                        column: x => x.VisifyTrackSpotifyId,
-                        principalTable: "VisifyTrack",
-                        principalColumn: "SpotifyId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -258,53 +188,10 @@ namespace Visify.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VisifyArtist_VisifyTrackSpotifyId",
-                table: "VisifyArtist",
-                column: "VisifyTrackSpotifyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VisifySavedTrack_TrackId",
-                table: "VisifySavedTrack",
-                column: "TrackId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VisifySavedTrack_VisifyTrackSpotifyId",
-                table: "VisifySavedTrack",
-                column: "VisifyTrackSpotifyId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_VisifySavedTrack_VisifyTrack_TrackId",
-                table: "VisifySavedTrack",
-                column: "TrackId",
-                principalTable: "VisifyTrack",
-                principalColumn: "SpotifyId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_VisifySavedTrack_VisifyTrack_VisifyTrackSpotifyId",
-                table: "VisifySavedTrack",
-                column: "VisifyTrackSpotifyId",
-                principalTable: "VisifyTrack",
-                principalColumn: "SpotifyId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_VisifyTrack_VisifyArtist_SpotifyId",
-                table: "VisifyTrack",
-                column: "SpotifyId",
-                principalTable: "VisifyArtist",
-                principalColumn: "SpotifyId",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_VisifyArtist_VisifyTrack_VisifyTrackSpotifyId",
-                table: "VisifyArtist");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -321,22 +208,10 @@ namespace Visify.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "RateLimit");
-
-            migrationBuilder.DropTable(
-                name: "VisifySavedTrack");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "VisifyTrack");
-
-            migrationBuilder.DropTable(
-                name: "VisifyArtist");
         }
     }
 }

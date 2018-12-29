@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Visify.Areas.Identity.Data;
 
 namespace Visify.Models {
@@ -58,49 +60,68 @@ namespace Visify.Models {
 
     public class VisifyArtist {
 
-        [Key]
-        public string SpotifyId { get; set; }
+        public readonly string SpotifyId;
 
-        [Required]
-        public string ArtistName { get; set; }
+        public readonly string ArtistName;
+
+        public VisifyArtist(string spotifyId, string artistName) {
+            this.SpotifyId = spotifyId;
+            this.ArtistName = artistName;
+        }
     }
 
     public class VisifyTrack {
-        
-        [Key]
-        public string SpotifyId { get; set; }
 
-        [Required]
-        public string TrackName { get; set; }
+        public readonly string SpotifyId;
 
-        [Required]
-        public string AlbumName { get; set; }
+        public readonly string TrackName;
 
-        [Required]
-        [ForeignKey(nameof(VisifyArtist.SpotifyId))]
-        public VisifyArtist Artist { get; set; }
+        public readonly string AlbumName;
+
+        public readonly IList<VisifyArtist> Artists;
+
+        public VisifyTrack(string spotifyId, string trackName, string albumName, IEnumerable<VisifyArtist> artists) {
+            this.SpotifyId = spotifyId;
+            this.TrackName = trackName;
+            this.AlbumName = albumName;
+            this.Artists = artists.ToList();
+        }
 
     }
 
     public class VisifySavedTrack {
 
-        public VisifyTrack Track { get; set; }
-        public string TrackId { get; set; }
+        public readonly VisifyTrack VisifyTrack;
+        public readonly string SpotifyUserId;
+        public readonly DateTimeOffset SavedAt;
 
-        public VisifyUser User { get; set; }
-        public string UserId { get; set; }
-
-        [Required]
-        public DateTime SavedAt { get; set; }
+        public VisifySavedTrack(VisifyTrack visifyTrack, string spotifyUserId, DateTimeOffset savedAt) {
+            this.VisifyTrack = visifyTrack;
+            this.SpotifyUserId = spotifyUserId;
+            this.SavedAt = savedAt;
+        }
     }
 
     public class RateLimit {
 
-        public VisifyUser User { get; set; }
-        public string UserId { get; set; }
+        public readonly string SpotifyUserId;
+        public DateTimeOffset RateLimitExpiresAt { get; set; }
 
-        [Required]
-        public DateTime RateLimitExpiresAt { get; set; }
-        
+        public RateLimit(string spotifyUserId, DateTimeOffset expiresAt) {
+            this.SpotifyUserId = spotifyUserId;
+            this.RateLimitExpiresAt = expiresAt;
+        }
+    }
+
+    public class SpotifyError {
+        public readonly string SpotifyUserId;
+        public readonly string ErrorMessage;
+        public readonly int ErrorCode;
+
+        public SpotifyError(string spotifyUserId, int errorCode, string errorMessage) {
+            this.SpotifyUserId = spotifyUserId;
+            this.ErrorCode = ErrorCode;
+            this.ErrorMessage = errorMessage;
+        }
     }
 }
