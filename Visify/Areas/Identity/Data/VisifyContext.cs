@@ -11,6 +11,7 @@ namespace Visify.Models
 {
     public class VisifyContext : IdentityDbContext<VisifyUser>
     {
+
         public VisifyContext(DbContextOptions<VisifyContext> options)
             : base(options)
         {

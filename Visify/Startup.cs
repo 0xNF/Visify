@@ -28,7 +28,11 @@ namespace Visify
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// For identity init stuff <see cref="Areas.Identity.IdentityHostingStartup.Configure"/>
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -42,19 +46,14 @@ namespace Visify
                 options.ClientId = AppConstants.ClientId;
                 options.ClientSecret = AppConstants.ClientSecret;
                 options.SaveTokens = true;
-                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_MODIFY_PUBLIC.Name);
-                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_COLLABORATIVE.Name);
-                //options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_PRIVATE.Name);
                 options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.USER_LIBRARY_READ.Name);
             })
             ).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
 
-            /* For identity init stuff see Areas/Identity/IdentityHostingStartup.cs */
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            EnvironmentVariableService.PopulateEnvironmentVariables();
+            services.AddTransient<SpotifyService>();
 
             
         }
@@ -86,13 +85,10 @@ namespace Visify
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-
-
             EnvironmentVariableService.PopulateEnvironmentVariables();
             DatabaseService.ScaffoldTables().Wait();
             DatabaseSeedService s = new DatabaseSeedService(roleManager, userManager);
             s.Seed().Wait();
-
         }
     }
 }

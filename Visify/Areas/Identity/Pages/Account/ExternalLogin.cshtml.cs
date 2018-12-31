@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Visify.Areas.Identity.Data;
+using Visify.Services;
 
 namespace Visify.Areas.Identity.Pages.Account
 {
@@ -19,15 +20,18 @@ namespace Visify.Areas.Identity.Pages.Account
         private readonly SignInManager<VisifyUser> _signInManager;
         private readonly UserManager<VisifyUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly SpotifyService _spotify;
 
         public ExternalLoginModel(
             SignInManager<VisifyUser> signInManager,
             UserManager<VisifyUser> userManager,
+            SpotifyService spotService,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _spotify = spotService;
         }
 
         [BindProperty]
@@ -77,10 +81,12 @@ namespace Visify.Areas.Identity.Pages.Account
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
+            string aspnetid = _userManager.GetUserId(info.Principal); //(await _userManager.GetUserAsync(info.Principal));
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                _spotify.GetUsersLibrary(aspnetid);
                 return LocalRedirect(returnUrl);
             }
             if (result.IsLockedOut)
@@ -90,6 +96,8 @@ namespace Visify.Areas.Identity.Pages.Account
             else
             {
                 // If the user does not have an account, then ask the user to create an account.
+                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                _spotify.GetUsersLibrary(aspnetid);
                 ReturnUrl = returnUrl;
                 LoginProvider = info.LoginProvider;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))

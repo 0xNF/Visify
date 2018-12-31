@@ -42,8 +42,14 @@
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
-        @RenderBody()
+    <div class="container body-content" style="display:grid; grid-template-columns:60px 120px">
+
+        <div style="grid-column: 1; background:black">
+
+        </div>
+        <div style="grid-column:2">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; 2018 - Visify</p>

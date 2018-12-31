@@ -20,7 +20,7 @@ namespace Visify.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("VisifyContextConnection")));
 
-                services.AddDefaultIdentity<VisifyUser>((x) => {
+                services.AddIdentity<VisifyUser, IdentityRole>((x) => {
                     x.Password.RequiredLength = 4;
                     x.Password.RequiredUniqueChars = 0;
                     x.Password.RequireNonAlphanumeric = false;
@@ -28,7 +28,8 @@ namespace Visify.Areas.Identity
                     x.Password.RequireLowercase = false;
                     x.Password.RequireUppercase = false;
                 })
-                    .AddRoles<IdentityRole>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
                     .AddEntityFrameworkStores<VisifyContext>();
             });
         }
