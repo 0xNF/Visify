@@ -1,8 +1,16 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
+
+html {
+    height: 100%;
+}
+
 body {
+    height: 100%;
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #50514F;
+    color: white;
 }
 
 /* Wrapping element */
@@ -10,6 +18,7 @@ body {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    height: 100%;
 }
 
 /* Carousel */
@@ -35,7 +44,6 @@ body {
         display: none;
     }
 }
-
 
 
 .fixed_header {
@@ -64,5 +72,61 @@ body {
     padding: 5px;
     text-align: left;
     width: 200px;
+}
+
+
+.centerbox {
+    background: #252524;
+    /*background: #247BA0;*/
+    height: 100%;
+}
+
+.imagesep {
+    margin-bottom: 25px;
+}
+
+.imagesep img + img {
+    margin-left: 25px;
+}
+
+.pblock {
+    text-align: left;
+    font-size: 16px;
+}
+
+.spotifybtn {
+    border: 1px solid transparent;
+    background-image: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 0;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 500px;
+    padding: 18px 48px 16px;
+    transition-property: background-color,border-color,color,box-shadow,filter;
+    transition-duration: .3s;
+    border-width: 0;
+    letter-spacing: 2px;
+    min-width: 160px;
+    text-transform: uppercase;
+    white-space: normal;
+}
+
+.spotifybtn-primary {
+    border-color: #1aa34a;
+    color: #fff;
+    background-color: #1db954;
+}
+
+.spotifybtn-small {
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 500px;
+    padding: 11px 32px 9px;
 }
 
