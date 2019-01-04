@@ -1,0 +1,85 @@
+﻿@page
+@using Visify.Models;
+@model Visify.Areas.Identity.Pages.Account.Manage.LibraryModel
+@{
+    ViewData["Title"] = "Library";
+}
+<h1>@ViewData["Title"]</h1>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="pagearrows">
+            <a disabled="@(!Model.CanGoBackwards)" href="@(!Model.CanGoBackwards ? "#" : "?offset=" + (@Model.Offset-50))">
+                <button disabled="@(!Model.CanGoBackwards)"><</button>
+            </a>
+            <a disabled="@(!Model.CanGoForwards)" href="@(!Model.CanGoForwards? "#" : "?offset=" + (@Model.Offset+50))">
+                <button disabled="@(!Model.CanGoForwards)">></button>
+            </a>
+        </div>
+        <table id="songs" class="table fixed_header">
+            <thead>
+                <tr>
+                    <th>
+                        Track Name
+                    </th>
+                    <th>
+                        Artists
+                    </th>
+                    <th>
+                        Album
+                    </th>
+                </tr>
+            </thead>
+            <tbody style="height: 500px">
+                @foreach (VisifySavedTrack vst in Model.SavedTracks) {
+                    <tr>
+                        <th>
+                            @vst.VisifyTrack.TrackName
+                        </th>
+                        <th>
+                            @String.Join(", ", vst.VisifyTrack.Artists.Select(x => x.ArtistName))
+                        </th>
+                        <th>
+                            @vst.VisifyTrack.AlbumName
+                        </th>
+                        <th>
+                            <a target="_blank" href="https://open.spotify.com/track/@vst.VisifyTrack.SpotifyId">
+                                <img src="https://developer.spotify.com/images/favicon.ico" height="16" />
+                            </a>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="pagearrows">
+            <a disabled="@(!Model.CanGoBackwards)" href="@(!Model.CanGoBackwards ? "#" : "?offset=" + (@Model.Offset-50))">
+                <button disabled="@(!Model.CanGoBackwards)"><</button>
+            </a>
+            <a disabled="@(!Model.CanGoForwards)" href="@(!Model.CanGoForwards? "#" : "?offset=" + (@Model.Offset+50))">
+                <button disabled="@(!Model.CanGoForwards)">></button>
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <form id="clear-songs-form" class="col-md-4" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button id="clear-songs" type="submit" asp-page-handler="ClearSongs" class="btn btn-danger">Clear Downloaded Songs</button>
+            </form>
+            <form id="update-library-form" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button id="update-songs" type="submit" asp-page-handler="UpdateLibrary" class="btn btn-success">Update Library</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -34,6 +34,10 @@ namespace Visify.Controllers
             return View();
         }
 
+        public IActionResult Graph() {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

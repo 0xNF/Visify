@@ -3,8 +3,8 @@
 @inject SignInManager<Visify.Areas.Identity.Data.VisifyUser> SignInManager
 @inject UserManager<Visify.Areas.Identity.Data.VisifyUser> UserManager
 
-@if (SignInManager.IsSignedIn(User))
-{
+
+@if (SignInManager.IsSignedIn(User)) {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -16,10 +16,16 @@
         </ul>
     </form>
 }
-else
-{
+else {
+
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+        <li>
+            <a class="spotifybtn spotifybtn-primary spotifybtn-small">
+                <form method="post" asp-area="Identity"  asp-page="/Account/ExternalLogin" asp-route-returnUrl="/">
+                    <button type="submit" name="provider" value="Spotify" style="background: transparent; border-color: transparent; color: #fff" title="Log in using your Spotify account">Sign in with Spotify</button>
+                </form>
+            </a>
+        </li>
     </ul>
+
 }

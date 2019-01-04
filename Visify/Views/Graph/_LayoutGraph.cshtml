@@ -15,6 +15,19 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-ease.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-selection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+    <script src="https://d3js.org/d3-transition.v1.min.js"></script>
+    <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+    <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/vgraph.css">
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,22 +51,32 @@
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
+    <div class="row vsidebarcontainer">
+        <div class="col-md-3 vsidebar">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@ManageNavPagesGraph.ArtistCollabGraphNavClass(ViewContext)" style="display: block">
+                    <a asp-controller="Graph" asp-action="ArtistCollabGraph">
+                        <div class="vbaroption">
+                            <img height="64" src="~/images/icon_collab128.png" />
+                        </div>
+                        <label>Collaboration Graph</label>
+                    </a>
+                </li>
+                <li class="@ManageNavPagesGraph.ArtistSongGroupNavClass(ViewContext)" style="display: block">
+                    <a asp-controller="Graph" asp-action="ArtistSongGroupGraph">
+                        <div class="vbaroption">
+                            <img height="64" src="~/images/icon_group128.png" />
+                        </div>
+                        <label>Artist Song Graph</label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9" style="height: 100%; padding-left:0; padding-right: 0; width:85%">
+            @RenderBody()
+        </div>
     </div>
 
-    <nav class="navbar navbar-fixed-bottom">
-        <div class="container">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

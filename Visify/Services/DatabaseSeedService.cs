@@ -53,7 +53,7 @@ namespace Visify.Services {
                 }
             }
             if (Admin.LockoutEnabled) {
-                logger.Info("Admin wss created in a lockedout state. Setting admin to be logina-able...");
+                logger.Info("Admin was created in a lockedout state. Setting admin to be logina-able...");
                 await _userManager.SetLockoutEnabledAsync(Admin, false);
             }
             if (!Admin.EmailConfirmed) {
@@ -107,11 +107,11 @@ namespace Visify.Services {
              * 7. Ask Spotify 
              */
 
-            VisifyUser user = await _context.Users.Include(x => x.RateLimit).Include(x => x.UserLibrary).Where(x => x.Id == uid).SingleOrDefaultAsync();
-            if(user == null) {
-                // TODO we failed, what do
-                return; 
-            }
+            //VisifyUser user = await _context.Users.Include(x => x.RateLimit).Include(x => x.UserLibrary).Where(x => x.Id == uid).SingleOrDefaultAsync();
+            //if(user == null) {
+            //    // TODO we failed, what do
+            //    return; 
+            //}
 
             //ClaimsPrincipal claimsPrincipal = await _SigninManager.CreateUserPrincipalAsync(user);
             //var externalAccessToken = await _userManager.GetAuthenticationTokenAsync(claimsPrincipal, "Microsoft", "access_token");
