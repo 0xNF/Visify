@@ -34,9 +34,6 @@ namespace Visify.Areas.Identity.Pages.Account
             _spotify = spotService;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
         public string LoginProvider { get; set; }
 
         public string ReturnUrl { get; set; }
@@ -44,12 +41,6 @@ namespace Visify.Areas.Identity.Pages.Account
         [TempData]
         public string ErrorMessage { get; set; }
 
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-        }
 
         public IActionResult OnGetAsync()
         {
@@ -81,7 +72,7 @@ namespace Visify.Areas.Identity.Pages.Account
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
-            string aspnetid = _userManager.GetUserId(info.Principal); //(await _userManager.GetUserAsync(info.Principal));
+            string aspnetid = _userManager.GetUserId(info.Principal);
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -96,55 +87,27 @@ namespace Visify.Areas.Identity.Pages.Account
             else
             {
                 // If the user does not have an account, then ask the user to create an account.
-                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
-                _spotify.GetUsersLibrary(aspnetid);
-                ReturnUrl = returnUrl;
-                LoginProvider = info.LoginProvider;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
-                }
-                return Page();
-            }
-        }
-
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
-        {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            // Get the information about the user from the external login provider
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-            {
-                ErrorMessage = "Error loading external login information during confirmation.";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
-            }
-
-            if (ModelState.IsValid)
-            {
-                var user = new VisifyUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
+                string uid = _userManager.GetUserId(info.Principal);
+                string uname = _userManager.GetUserName(info.Principal);
+                var user = new VisifyUser { UserName = String.IsNullOrWhiteSpace(uname) ? uid : uname, Id = uid };
+                var result2 = await _userManager.CreateAsync(user);
+                if (result2.Succeeded) {
+                    result2 = await _userManager.AddLoginAsync(user, info);
+                    if (result2.Succeeded) {
+                        await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                        _spotify.GetUsersLibrary(aspnetid); // Purposefully do not await
+                        ReturnUrl = returnUrl;
+                        LoginProvider = info.LoginProvider;
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
+                foreach (var error in result2.Errors) {
                     ModelState.AddModelError(string.Empty, error.Description);
-                }
+                }   
+                return Page();
             }
-
-            LoginProvider = info.LoginProvider;
-            ReturnUrl = returnUrl;
-            return Page();
         }
     }
 }

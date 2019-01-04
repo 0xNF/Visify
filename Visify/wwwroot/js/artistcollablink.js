@@ -340,6 +340,7 @@ function mainf(j) {
         .force('link', linkForce)
         .force('charge', d3.forceManyBody().strength(-120))
         .force('center', d3.forceCenter(centerWidth, centerHeight));
+        //.on("start", start);
 
     dragDrop = d3.drag().on('start', function (node) {
         node.fx = node.x;
@@ -385,7 +386,49 @@ function mainf(j) {
         .attr("dx", 15)
         .attr("dy", 4);
 
-    simulation.nodes(nodes).on('tick', () => {
+
+    //var tpr = 5;
+    //function start() {
+    //    RequestAnimationFrame(function render() {
+    //        for (var i = 0; i < ticksPerRender; i++) {
+    //            simulation.tick();
+    //        }
+    //        nodeElements
+    //            .attr('cx', function (node) { return node.x })
+    //            .attr('cy', function (node) { return node.y })
+    //        textElements
+    //            .attr('x', function (node) { return node.x })
+    //            .attr('y', function (node) { return node.y })
+    //        linkElements
+    //            .attr('x1', function (link) { return link.source.x })
+    //            .attr('y1', function (link) { return link.source.y })
+    //            .attr('x2', function (link) { return link.target.x })
+    //            .attr('y2', function (link) { return link.target.y })
+    //            .attr("stroke-width", function (link) { return CalculateLinkThickness(link.tracks) })
+    //            .on("mouseover", function (link) {
+    //                div.transition()
+    //                    .duration(200)
+    //                    .style("opacity", .9);
+    //                div.text(getLinkText(link))
+    //                    .style("left", (d3.event.pageX) + "px")
+    //                    .style("top", (d3.event.pageY - 28) + "px");
+    //            })
+    //            .on("mouseout", function (link) {
+    //                div.transition()
+    //                    .duration(500)
+    //                    .style("opacity", 0);
+    //            });
+    //    });
+    //}
+
+    var tpr = 1;
+    function tickp() {
+        for (var i = 0; i < tpr; i++) {
+            tick();
+        }
+    }
+
+    function tick() {
         nodeElements
             .attr('cx', function (node) { return node.x })
             .attr('cy', function (node) { return node.y })
@@ -397,7 +440,7 @@ function mainf(j) {
             .attr('y1', function (link) { return link.source.y })
             .attr('x2', function (link) { return link.target.x })
             .attr('y2', function (link) { return link.target.y })
-            .attr("stroke-width", function(link){return CalculateLinkThickness(link.tracks)})
+            .attr("stroke-width", function (link) { return CalculateLinkThickness(link.tracks) })
             .on("mouseover", function (link) {
                 div.transition()
                     .duration(200)
@@ -411,7 +454,9 @@ function mainf(j) {
                     .duration(500)
                     .style("opacity", 0);
             });
-    });
+    }
+
+    simulation.nodes(nodes).on('tick', tick);
 
     textOnOff();
     simulation.force("link").links(links);

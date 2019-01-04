@@ -33,6 +33,10 @@ namespace Visify.Controllers
         {
             return View();
         }
+        
+        public IActionResult ReleaseNotes() {
+            return View();
+        }
 
         public IActionResult Graph() {
             return View();

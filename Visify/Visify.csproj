@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="2.0.0" />
+    <PackageReference Include="DotNetStandardSpotifyWebApi" Version="0.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
@@ -23,10 +24,6 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\lyricall\lyricallserver\DotNetStandardSpotifyWebApi\DotNetStandardSpotifyWebApi\DotNetStandardSpotifyWebApi.csproj" />
   </ItemGroup>
 
 </Project>
