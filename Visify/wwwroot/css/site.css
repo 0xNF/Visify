@@ -47,7 +47,7 @@ body {
 
 
 .fixed_header {
-    width: 400px;
+    /*width: 400px;*/
     table-layout: fixed;
     border-collapse: collapse;
 }
@@ -128,5 +128,31 @@ body {
     line-height: 1;
     border-radius: 500px;
     padding: 11px 32px 9px;
+}
+
+.vsidebarcontainer {
+    height: 100%;
+}
+
+.vsidebar {
+    height: 100%;
+    background: #171717;
+    width: 15%;
+}
+
+
+.vbaroption {
+    margin: 0 25%;
+}
+
+@media (max-width : 992px) {
+    .vsidebar {
+        height: auto;
+        width:auto;
+    }
+
+    .vbaroption{
+        margin: auto;
+    }
 }
 

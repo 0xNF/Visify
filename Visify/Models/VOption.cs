@@ -1,4 +1,6 @@
-﻿namespace Visify.Services {
+﻿using Visify.Services;
+
+namespace Visify.Models {
 
     public class VOption<T> {
 
