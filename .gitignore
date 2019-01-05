@@ -263,3 +263,4 @@ __pycache__/
 **/Visify/Properties/*
 **/Visify/visify.db
 **/json/*
+envvars.sh

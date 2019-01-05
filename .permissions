@@ -1,5 +1,6 @@
 .gitattributes;777;djori;djori
 .gitignore;777;djori;djori
+.permissions;777;djori;djori
 README.md;777;djori;djori
 Visify.sln;777;djori;djori
 Visify/Areas/Identity/Data/VisifyContext.cs;777;djori;djori
@@ -130,7 +131,6 @@ Visify/wwwroot/lib/jquery/LICENSE.txt;777;djori;djori
 Visify/wwwroot/lib/jquery/dist/jquery.js;777;djori;djori
 Visify/wwwroot/lib/jquery/dist/jquery.min.js;777;djori;djori
 Visify/wwwroot/lib/jquery/dist/jquery.min.map;777;djori;djori
-envvars.sh;777;djori;djori
 install.sh;777;djori;djori
 start.sh;777;djori;djori
 visify.service;777;djori;djori
