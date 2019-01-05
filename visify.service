@@ -1,0 +1,16 @@
+[Unit]
+Description="Visify Server"
+After=network.target
+StartLimitInterval=200
+StartLimitBurst=5
+
+[Service]
+User=science
+Group=science
+WorkingDirectory=/home/science/visify/Visify
+ExecStart=/home/science/visify/start.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
