@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Visify.Areas.Identity.Data;
 using Visify.Models;
+using Visify.Services;
 
 [assembly: HostingStartup(typeof(Visify.Areas.Identity.IdentityHostingStartup))]
 namespace Visify.Areas.Identity
@@ -15,10 +16,11 @@ namespace Visify.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
+            EnvironmentVariableService.PopulateEnvironmentVariables();
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<VisifyContext>(options =>
-                    options.UseSqlite(
-                        context.Configuration.GetConnectionString("VisifyContextConnection")));
+            services.AddDbContext<VisifyContext>(options =>
+                options.UseSqlite(AppConstants.ConnectionString));
+                        //context.Configuration.GetConnectionString("VisifyContextConnection")));
 
                 services.AddIdentity<VisifyUser, IdentityRole>((x) => {
                     x.Password.RequiredLength = 4;

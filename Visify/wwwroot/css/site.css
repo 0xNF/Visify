@@ -74,11 +74,15 @@ body {
     width: 200px;
 }
 
+.navbarbottom {
+    background: #222222;
+}
 
 .centerbox {
     background: #252524;
+    padding-bottom: 50px;
     /*background: #247BA0;*/
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .imagesep {
@@ -89,9 +93,11 @@ body {
     margin-left: 25px;
 }
 
+
 .pblock {
     text-align: left;
     font-size: 16px;
+    padding: 0 15px;
 }
 
 .spotifybtn {
@@ -153,6 +159,16 @@ body {
 
     .vbaroption{
         margin: auto;
+    }
+
+    .imagesep {
+        display:block;
+    }
+    .imagesep img{
+        vertical-align: unset;
+    }
+    .imagesep img + img {
+        margin: 0;
     }
 }
 

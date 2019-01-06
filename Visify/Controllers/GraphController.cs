@@ -28,7 +28,7 @@ namespace Visify.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(ArtistCollabGraph));
         }
 
         public IActionResult ArtistCollabGraph() {

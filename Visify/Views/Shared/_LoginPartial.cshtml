@@ -19,12 +19,10 @@
 else {
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a class="spotifybtn spotifybtn-primary spotifybtn-small">
-                <form method="post" asp-area="Identity"  asp-page="/Account/ExternalLogin" asp-route-returnUrl="/">
-                    <button type="submit" name="provider" value="Spotify" style="background: transparent; border-color: transparent; color: #fff" title="Log in using your Spotify account">Sign in with Spotify</button>
-                </form>
-            </a>
+        <li style="padding-top: 7px">
+            <form method="post" asp-area="Identity"  asp-page="/Account/ExternalLogin" asp-route-returnUrl="/">
+                <button type="submit" class="spotifybtn spotifybtn-primary spotifybtn-small"  name="provider" value="Spotify" style="color: #fff; display: block" title="Log in using your Spotify account">Sign in with Spotify</button>
+            </form>
         </li>
     </ul>
 

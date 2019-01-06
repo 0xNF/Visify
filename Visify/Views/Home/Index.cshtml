@@ -25,12 +25,10 @@
                 Or check out the <em>Artist Song Graph View</em>, which shows each artist along with all the songs they've done. You may be surprised to see how many songs one or two artists in your library have done.
             </p>
         </div>
-
         <div class="imagesep">
-            <img src="~/images/starmap.png" height="250" />
-            <img src="~/images/starburst.png" height="250" />
+            <img src="~/images/starmap.png" height="@imgHeight" width="@imgWidth" />
+            <img src="~/images/starburst.png" height="@imgHeight" width="@imgWidth" />
         </div>
-
 
         @if (SignInManager.IsSignedIn(User)) {
             <a asp-area="Identity" asp-page="/Account/Manage/Library">
@@ -38,10 +36,9 @@
             </a>
         }
         else {
-            <form class="spotifybtn spotifybtn-primary spotifybtn-small" method="post" asp-area="Identity" asp-page="/Account/ExternalLogin" asp-route-returnUrl="/Identity/Account/Manage/Library">
-                <button type="submit" name="provider" value="Spotify" style="background: transparent; border-color: transparent; color: #fff" title="Log in using your Spotify account">Sign in with Spotify</button>
+            <form method="post" style="display: inline-block" asp-area="Identity" asp-page="/Account/ExternalLogin" asp-route-returnUrl="/">
+                <button type="submit" class="spotifybtn spotifybtn-primary spotifybtn-small" name="provider" value="Spotify" style="color: #fff; display: block" title="Log in using your Spotify account">Sign in with Spotify</button>
             </form>
         }
-
     </div>
 </div>
