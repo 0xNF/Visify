@@ -1,16 +1,27 @@
 ﻿@page
 @model LoginModel
-
 @{
     ViewData["Title"] = "Log in";
 }
-
 <h2>@ViewData["Title"]</h2>
+
+
+
 <div class="row">
     <div class="col-md-4">
+
         <section>
+            <form method="post" style="display: inline-block" asp-area="Identity" asp-page="/Account/ExternalLogin" asp-route-returnUrl="/">
+                <button type="submit" class="spotifybtn spotifybtn-primary spotifybtn-small" name="provider" value="Spotify" style="color: #fff; display: block" title="Log in using your Spotify account">Sign in with Spotify</button>
+            </form>
+        </section>
+        <br />
+        <hr />
+        <button id="colshowbtn" type="button" class="btn btn-sm btn-info" onclick="colshow()">more</button>
+        <section id="adminlogin" class="collapse">
             <form method="post">
                 <h4>Use a local account to log in.</h4>
+                <h5 class="text-danger">This is for administrators. Get out of here, <span style="text-decoration: line-through">stalker</span> hacker!</h5>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -39,6 +50,20 @@
     </div>
 </div>
 
+<script>
+    var col_show = false;
+    function colshow() {
+        col_show = !col_show;
+        if (col_show) {
+            $('#adminlogin').removeClass('collapse');
+            $('#colshowbtn').text("hide");
+        } else {
+            $('#adminlogin').addClass('collapse');
+            $('#colshowbtn').text("more");
+        }
+
+    }
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
