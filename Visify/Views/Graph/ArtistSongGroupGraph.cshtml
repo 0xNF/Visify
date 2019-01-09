@@ -5,38 +5,27 @@
     Layout = "~/Views/Graph/_LayoutGraph.cshtml";
 }
 
-
 <div style="background:black; height: 100%; width:100%">
-    <svg background="red"></svg>
     <div class="menubar">
         <div>
-            <button type="button" class="menubutton" onclick="ResetMap()">reset</button>
-            <button type="button" class="menubutton" onclick="Recenter()">center</button>
-            <button type="button" class="menubutton" onclick="ResetZoom()">reset zoom</button>
-        </div>
-        <div>
-            <label class="menulabel" for="textWhich">Show Labels</label>
-            <select id="textWhich" class="menubutton" onchange="textOnOff()">
+            <label for="textWhich">Show Labels</label>
+            <select id="textWhich" onchange="textOnOff()">
                 <option value="0">on</option>
-                <option value="1" selected="selected">off</option>
-                <option value="2">on for highlighted</option>
-                <option value="3">on for non-highlighted</option>
+                <option value="1" selected="selected">on for highlighted</option>
+                <option value="2">on for non-highlighted</option>
+                <option value="3">off</option>
             </select>
         </div>
         <div>
-            <label class="menulabel" for="nodesWhich">Show Nodes</label>
-            <select id="nodesWhich" class="menubutton" onchange="nodeOnOff()">
+            <label for="nodesWhich">Show Nodes</label>
+            <select id="nodesWhich" onchange="nodeOnOff()">
                 <option value="0" selected="selected">all nodes</option>
                 <option value="1">only selected nodes</option>
             </select>
         </div>
-        <div>
-            <button class="menubutton" onclick="ClearSearchText()">x</button>
-            <input class="menubutton" id="searchText" />
-            <button class="menubutton" onclick="FindNode()">search</button>
-        </div>
     </div>
-
+    <div id="graphDiv"></div>
+    <div id="tooltip" class="tooltip"></div>
 </div>
-<script src="~/js/artistsonglink.js">
+<script src="~/js/song_canvas.js">
 </script>

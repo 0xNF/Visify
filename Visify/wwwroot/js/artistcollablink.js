@@ -175,7 +175,7 @@ function getNeighbors(node) {
                 fetched.push(lsid);
                 toFetch.push(lsid);
             }
-             else if (lsid === nid && fetched.indexOf(ltid === -1)) {
+             else if (lsid === nid && fetched.indexOf(ltid) === -1) {
                 neighbors.push({id: ltid, depth: depth});
                 fetched.push(ltid);
                 toFetch.push(ltid);

@@ -80,6 +80,7 @@ Visify/Visify.csproj;777;djori;djori
 Visify/appsettings.Development.json;777;djori;djori
 Visify/appsettings.json;777;djori;djori
 Visify/bundleconfig.json;777;djori;djori
+Visify/wwwroot/css/ovgraph.css;777;djori;djori
 Visify/wwwroot/css/site.css;777;djori;djori
 Visify/wwwroot/css/site.min.css;777;djori;djori
 Visify/wwwroot/css/vgraph.css;777;djori;djori
@@ -96,9 +97,11 @@ Visify/wwwroot/images/starburst.png;777;djori;djori
 Visify/wwwroot/images/starmap.png;777;djori;djori
 Visify/wwwroot/js/artistcollablink.js;777;djori;djori
 Visify/wwwroot/js/artistsonglink.js;777;djori;djori
+Visify/wwwroot/js/collab_canvas.js;777;djori;djori
 Visify/wwwroot/js/main_song.js;777;djori;djori
 Visify/wwwroot/js/site.js;777;djori;djori
 Visify/wwwroot/js/site.min.js;777;djori;djori
+Visify/wwwroot/js/song_canvas.js;777;djori;djori
 Visify/wwwroot/lib/bootstrap/.bower.json;777;djori;djori
 Visify/wwwroot/lib/bootstrap/LICENSE;777;djori;djori
 Visify/wwwroot/lib/bootstrap/dist/css/bootstrap-theme.css;777;djori;djori

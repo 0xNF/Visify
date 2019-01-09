@@ -29,6 +29,7 @@ namespace Visify.Areas.Identity
                     x.Password.RequireDigit = false;
                     x.Password.RequireLowercase = false;
                     x.Password.RequireUppercase = false;
+                    x.User.AllowedUserNameCharacters = null;
                 })
                     .AddDefaultUI()
                     .AddDefaultTokenProviders()

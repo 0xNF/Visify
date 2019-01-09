@@ -1,39 +1,34 @@
+.edge {
+    stroke: white;
+    stroke-width: 1;
+}
+
+.graphSVG {
+    background-color: black;
+}
+
+canvas{
+    background: black;
+}
+
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
 div.tooltip {
     position: absolute;
-    text-align: center;
-    width: 320px;
-    height: 72px;
+    text-align: left;
+    width: 180px;
     padding: 2px;
-    font: 36px sans-serif;
+    font: 12px sans-serif;
     background: lightsteelblue;
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
 }
-
-label{
-    color: white;
-}
-
-.texts {
-    fill: white;
-    opacity: 1;
-}
-
 .menubar {
-top: 0;
-left: 25px;
-position: absolute;
-}
-
-.menubutton {
-    color:black;
-}
-.menulabel {
-    color:white;
-}
-
-.bodystyle {
-    background:black;
-    height: 100%;
-}
+    top: 0;
+    left: 0;
+    position: absolute;
+    }
