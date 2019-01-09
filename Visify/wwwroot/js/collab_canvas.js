@@ -15,7 +15,7 @@ var contextStokeStyle = "gray";
 
 //-- Display Functions --\\
 var nodeSwitch = 0;
-var labelSwitch = 1;
+var labelSwitch = 0;
 
 function nodeOnOff(i){
     nodeSwitch = parseInt(d3.select("#nodesWhich").property("value"));
